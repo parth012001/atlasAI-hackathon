@@ -11,7 +11,7 @@ async function testFullIntegration() {
     request: "I want to visit Paris for a week mixing business and pleasure",
     travelData: {
       description: "I want to visit Paris for a week mixing business and pleasure",
-      departureDate: "2024-12-15",
+      departureDate: "2025-09-21",
       returnDate: "2024-12-22", 
       flightBudget: "1000",
       hotelBudget: "200"
@@ -105,7 +105,7 @@ async function testWithDifferentDestinations() {
       request: destination,
       travelData: {
         description: destination,
-        departureDate: "2024-12-15",
+        departureDate: "2025-09-21",
         returnDate: "2024-12-22",
         flightBudget: "1200",
         hotelBudget: "150"

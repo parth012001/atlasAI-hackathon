@@ -13,7 +13,7 @@ async function testApifyIntegration() {
       input: {
         "origin.0": "SFO",
         "target.0": "CDG", 
-        "depart.0": "2024-12-15",
+        "depart.0": "2025-09-21",
         "return.0": "2024-12-22"
       }
     },
@@ -30,7 +30,7 @@ async function testApifyIntegration() {
       input: {
         "from": "SFO",
         "to": "CDG",
-        "departure": "2024-12-15",
+        "departure": "2025-09-21",
         "return": "2024-12-22"
       }
     }

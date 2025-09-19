@@ -21,16 +21,16 @@ export async function generateTravelPlan(request: TravelRequest): Promise<Travel
       "outboundFlight": {
         "id": "flight-out-1",
         "airline": "Example Airlines",
-        "departure": {"airport": "JFK", "time": "14:30", "date": "2024-03-15"},
-        "arrival": {"airport": "CDG", "time": "08:15", "date": "2024-03-16"},
+        "departure": {"airport": "JFK", "time": "14:30", "date": "2025-09-21"},
+        "arrival": {"airport": "CDG", "time": "08:15", "date": "2025-09-22"},
         "price": 650,
         "bookingUrl": "https://example.com/book"
       },
       "returnFlight": {
         "id": "flight-ret-1", 
         "airline": "Example Airlines",
-        "departure": {"airport": "CDG", "time": "11:20", "date": "2024-03-22"},
-        "arrival": {"airport": "JFK", "time": "15:45", "date": "2024-03-22"},
+        "departure": {"airport": "CDG", "time": "11:20", "date": "2025-09-28"},
+        "arrival": {"airport": "JFK", "time": "15:45", "date": "2025-09-28"},
         "price": 650,
         "bookingUrl": "https://example.com/book"
       },
@@ -40,14 +40,14 @@ export async function generateTravelPlan(request: TravelRequest): Promise<Travel
         "address": "123 Example Street",
         "rating": 4.5,
         "pricePerNight": 200,
-        "checkIn": "2024-03-16",
-        "checkOut": "2024-03-22",
+        "checkIn": "2025-09-22",
+        "checkOut": "2025-09-28",
         "bookingUrl": "https://example.com/book",
         "amenities": ["WiFi", "Breakfast", "Gym"]
       },
       "itinerary": [
         {
-          "date": "2024-03-16",
+          "date": "2025-09-22",
           "activities": [
             {
               "id": "act-1",
@@ -88,8 +88,8 @@ export async function generateTravelPlan(request: TravelRequest): Promise<Travel
       "calendarEvents": [
         {
           "title": "Flight to ${request.destination}",
-          "start": "2024-03-15T14:30:00",
-          "end": "2024-03-16T08:15:00",
+          "start": "2025-09-21T14:30:00",
+          "end": "2025-09-22T08:15:00",
           "location": "JFK Airport"
         }
       ]
