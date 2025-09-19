@@ -126,10 +126,16 @@ export async function parseNaturalLanguageRequest(description: string): Promise<
     "${description}"
     
     Return a JSON object with:
-    - destination: string
-    - duration: number (days)
-    - purpose: 'business' | 'leisure' | 'mixed'
+    - destination: string (extract the main destination city/country, e.g., "Paris", "Tokyo", "London")
+    - destinationCode: string (3-letter airport code for the destination, e.g., "CDG" for Paris, "NRT" for Tokyo)
+    - duration: number (days, if not specified assume 7)
+    - purpose: 'business' | 'leisure' | 'mixed' (infer from context)
     - budget: 'budget' | 'mid-range' | 'luxury' (infer from context)
+    
+    Examples:
+    "Paris for work and fun" → {"destination": "Paris", "destinationCode": "CDG", "purpose": "mixed"}
+    "Tokyo cultural experience" → {"destination": "Tokyo", "destinationCode": "NRT", "purpose": "leisure"}
+    "London business meetings" → {"destination": "London", "destinationCode": "LHR", "purpose": "business"}
   `;
 
   const response = await openai.chat.completions.create({
@@ -147,5 +153,40 @@ export async function parseNaturalLanguageRequest(description: string): Promise<
   } catch (error) {
     console.error('Failed to parse AI response:', error);
     return { description };
+  }
+}
+
+export async function fetchFlightData(travelData: any): Promise<any> {
+  const apifyInput = {
+    "origin.0": "San Francisco", // Use city name not airport code
+    "target.0": travelData.destination || "Paris", // Use destination city name
+    "depart.0": "TOMORROW" // Use relative date format for now
+  };
+
+  console.log('Apify Input:', apifyInput);
+
+  try {
+    // Add a timeout to prevent hanging
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
+
+    const response = await fetch(`https://api.apify.com/v2/acts/jupri~skyscanner-flight/run-sync-get-dataset-items?token=${process.env.APIFY_API_TOKEN}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(apifyInput),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    const flightData = await response.json();
+    console.log('Apify Response:', flightData);
+    
+    return flightData;
+  } catch (error) {
+    console.error('Failed to fetch flight data from Apify:', error);
+    throw new Error('Failed to fetch real flight data');
   }
 }
